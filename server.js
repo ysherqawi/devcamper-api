@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const colors = require('colors');
+const fileupload = require('express-fileupload');
 const dotenv = require('dotenv');
 
 //Load env var
@@ -12,6 +14,12 @@ const app = express();
 
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+
+//File uploading
+app.use(fileupload());
+
+//Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Mount routers
 require('./startup/routes')(app);
