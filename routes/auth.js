@@ -9,9 +9,9 @@ const {
   resetPassword,
 } = require('../controllers/auth');
 
-const router = express.Router();
-
 const { protect } = require('../middleware/auth');
+
+const router = express.Router();
 
 router.route('/register').post(register);
 
