@@ -13,20 +13,24 @@ dotenv.config({
 
 const app = express();
 
-//Cookie Parser
-app.use(cookiePaeser());
-
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
-
-//File uploading
-app.use(fileupload());
 
 //Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Cookie Parser
+app.use(cookiePaeser());
+
+//File uploading
+app.use(fileupload());
+
+//Security middlewares
+require('./startup/security')(app);
+
 //Mount routers
 require('./startup/routes')(app);
+
 //Connect to database
 require('./startup/db')();
 
